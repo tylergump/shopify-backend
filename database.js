@@ -1,5 +1,4 @@
 const sqlite3 = require('sqlite3').verbose()
-// var md5 = require('md5')
 
 const DBSOURCE = "db.sqlite" 
 
@@ -18,7 +17,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             CONSTRAINT name_unique UNIQUE (name) 
             )`,(err) => {
         if (err) {
-            console.log("err")
+            // console.log("err")
             // Table already created
         }else{
             // Table just created, creating some rows

@@ -1,13 +1,13 @@
-var express = require("express")
-var app = express()
-var db = require("./database.js")
+const express = require("express")
+const app = express()
+const db = require("./database.js")
 // var md5 = require("md5")
 
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var HTTP_PORT = 3000
+const HTTP_PORT = 3000
 
 // Start server
 app.listen(HTTP_PORT, () => {
@@ -15,8 +15,8 @@ app.listen(HTTP_PORT, () => {
 });
 
 app.get("/api/items", (req, res, next) => {
-    var sql = "select * from item"
-    var params = []
+    const sql = "select * from item"
+    const params = []
     db.all(sql, params, (err, rows) => {
         if (err) {
           res.status(400).json({"error":err.message});
@@ -31,8 +31,8 @@ app.get("/api/items", (req, res, next) => {
 
 
 app.get("/api/item/:id", (req, res, next) => {
-    var sql = "select * from item where id = ?"
-    var params = [req.params.id]
+    const sql = "select * from item where id = ?"
+    const params = [req.params.id]
     db.get(sql, params, (err, row) => {
         if (err) {
           res.status(400).json({"error":err.message});
@@ -47,7 +47,7 @@ app.get("/api/item/:id", (req, res, next) => {
 
 
 app.post("/api/item/", (req, res, next) => {
-    var errors=[]
+    const errors=[]
     if (!req.body.name){
         errors.push("No item name specified");
     }
@@ -58,12 +58,12 @@ app.post("/api/item/", (req, res, next) => {
         res.status(400).json({"error":errors.join(",")});
         return;
     }
-    var data = {
+    const data = {
         name: req.body.name,
         amount: req.body.amount,
     }
-    var sql ='INSERT INTO item (name, amount) VALUES (?,?)'
-    var params =[data.name, data.amount]
+    const sql ='INSERT INTO item (name, amount) VALUES (?,?)'
+    const params =[data.name, data.amount]
     db.run(sql, params, function (err, result) {
         if (err){
             res.status(400).json({"error": err.message})
@@ -80,7 +80,7 @@ app.post("/api/item/", (req, res, next) => {
 
 
 app.patch("/api/item/:id", (req, res, next) => {
-    var data = {
+    const data = {
         name: req.body.name,
         amount: req.body.amount,
     }
